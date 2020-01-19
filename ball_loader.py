@@ -230,8 +230,13 @@ if __name__ == "__main__":
     import cv2
     import random
     from detectron2.utils.visualizer import Visualizer
+
+    ball_metadata = MetadataCatalog.get(dataset_name).set(
+        json_file=json_file, image_root=img_dir, evaluator_type="coco"
+    )
     for d in random.sample(dataset_dicts, 1):
         img = cv2.imread(d["file_name"])
-        visualizer = Visualizer(img[:, :, ::-1], metadata=balloon_metadata, scale=0.5)
+        visualizer = Visualizer(img[:, :, ::-1], metadata=ball_metadata, scale=0.5)
         vis = visualizer.draw_dataset_dict(d)
-        cv2.imshow('vis image', vis.get_image()[:, :, ::-1])
+        # cv2.imshow('vis image', vis.get_image()[:, :, ::-1])
+        vis.save("../data/results/vis.jpeg")
