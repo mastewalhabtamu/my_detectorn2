@@ -234,9 +234,11 @@ if __name__ == "__main__":
     ball_metadata = MetadataCatalog.get(dataset_name).set(
         json_file=json_file, image_root=img_dir, evaluator_type="coco"
     )
-    for d in random.sample(dataset_dicts, 1):
+    sample_no = 0
+    for d in random.sample(dataset_dicts, 3):
+        sample_no += 1
         img = cv2.imread(d["file_name"])
         visualizer = Visualizer(img[:, :, ::-1], metadata=ball_metadata, scale=0.5)
         vis = visualizer.draw_dataset_dict(d)
         # cv2.imshow('vis image', vis.get_image()[:, :, ::-1])
-        vis.save("../data/results/vis.jpeg")
+        vis.save(f"../data/results/vis{sample_no}.jpeg")
